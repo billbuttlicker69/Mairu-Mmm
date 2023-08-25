@@ -1,0 +1,51 @@
+class SharedMemory {
+ private int sharedData;
+
+public synchronized int getSharedData() {
+ return sharedData;
+
+public synchronized void setSharedData(int data) {
+
+this sharedData = data;
+}
+}
+class Sender extends Thread {
+
+private SharedMemory sharedMemory;
+
+private int dataToSend;
+ public Sender(SharedMemory sharedMemory, int data) {
+
+this.sharedMemory = sharedMemory;
+
+this.dataToSend = data;
+}
+@Override.
+
+public void run() {
+
+sharedMemory.setSharedData(dataToSend);
+}}
+class Receiver extends Thread{
+
+private SharedMemory sharedMemory;
+
+public Receiver(SharedMemory sharedMemory) {
+
+this.sharedMemory = sharedMemory;
+
+@Override
+
+public void run() {
+
+int receivedData = sharedMemory.getSharedData(); 
+System.out.println("Received Data: " + receivedData);
+}}
+public class SharedMemoryIPC {
+ public static void main(String[] args)
+ { SharedMemory sharedMemory= new SharedMemory();
+   Sender sender = new Sender(sharedMemory, 42);
+    Receiver receiver new Receiver(sharedMemory); 
+    sender.start(); 
+     receiver.start();
+}}
